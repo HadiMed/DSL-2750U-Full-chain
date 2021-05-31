@@ -9,12 +9,9 @@
   firmware : GAN9.ET235B-B-DL-DSL2750U-R5B028-ME.EN_2T2R</i>
   
 ### firmware basic information gathering 
-<i>
-i started looking into the firmware for backdoor accounts , the <b>/etc/shadow </b> file contains only 2 users root and sshuser , after bruteforcing the passwords , the root user has root as password , and sshuser : admin , but looks like web/telnet and ssh authentication is  configured somewhere else , in the file <b>/etc/config.xml </b> ,but looks like there is only one user for each service , so nothinng intresting .<br/> now for the web server , they are using a <b>mini_httpd</b> webserver and passing requests and actions through <b>/usr/www/cgi-bin/webproc</b>(Authentication , web pages ...) , now in the cgi-bin directory i found another file <b>webupg</b> its also a binary that handle certain type of requests . 
-</i>
+<i>i started looking into the firmware for backdoor accounts , the <b>/etc/shadow </b> file contains only 2 users root and sshuser , after bruteforcing the passwords , the root user has root as password , and sshuser : admin , but looks like web/telnet and ssh authentication is  configured somewhere else , in the file <b>/etc/config.xml </b> ,but looks like there is only one user for each service , so nothinng intresting .<br/> now for the web server , they are using a <b>mini_httpd</b> webserver and passing requests and actions through <b>/usr/www/cgi-bin/webproc</b>(Authentication , web pages ...) , now in the cgi-bin directory i found another file <b>webupg</b> its also a binary that handle certain type of requests . </i>
 ### reversing webupg
-<i>
-file command says it s a stripped binary , importing file in ghidra , basic auto analysis , first its checking for some headers in the request , and the request method : (all functions and symbols were reversed) </i>
+<i>file command says it s a stripped binary , importing file in ghidra , basic auto analysis , first its checking for some headers in the request , and the request method : (all functions and symbols were reversed) </i>
 ```c
   iVar2 = getenv("REQUEST_METHOD");
   if ((iVar2 == 0) || (iVar2 = FUN_00401880(iVar2,"POST"), iVar2 != 0)) {
