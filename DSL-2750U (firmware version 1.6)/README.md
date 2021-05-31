@@ -57,7 +57,7 @@ LAB_004032bc:
               bVar1 = true;
 ```
 <br/>
-<i>now if we have it let us run some actions , depending on what we provide in a POST variable called name  </i><br/>
+<i>now if we have it let us run some actions , depending on what we provide in a POST variable called name  </i>
 ```c
             iVar5 = FUN_00401160(iVar2 + 5);
             iVar2 = func_0x004011c0(iVar5,"ShowSysEvtLogFile");
