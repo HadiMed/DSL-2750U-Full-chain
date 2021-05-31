@@ -41,7 +41,6 @@ LAB_004032bc:
 ```
 <br/>
 <i>Then its checking if we provided a valid session id </i><br/>
-
 ```c
     iVar2 = getenv("HTTP_COOKIE");
     if (iVar2 != 0) {
@@ -56,7 +55,6 @@ LAB_004032bc:
             if ((iVar2 != 0) && (iVar2 = FUN_004018a8(iVar2 + 1), iVar2 == 0)) {
               bVar1 = true;
 ```
-<br/>
 <i>now if we have it let us run some actions , depending on what we provide in a POST variable called name  </i>
 ```c
             iVar5 = FUN_00401160(iVar2 + 5);
