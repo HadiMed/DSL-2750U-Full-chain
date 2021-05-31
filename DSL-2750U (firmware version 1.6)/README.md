@@ -1,4 +1,4 @@
-# Analysis and PoC 
+# Analysis and PoC
 
 ```
 @settings {
