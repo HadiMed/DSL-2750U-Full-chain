@@ -1,5 +1,11 @@
 # Analysis and PoC 
+```
 
+@settings {
+  font-size: 100;
+}
+
+```
 ### Device Informations :
 <i>
   Brand : Dlink <br/>
@@ -124,6 +130,6 @@ tftp is very limited , and its generally used for simple tasks get , put some fi
 
 ### Poc
 <i>
-okey now we have a way to overwrite the config file with my username and password (the router will do it for me , easy just login to my router saving the backup file with username:pwned , password:pwned , now i have a configuration file that i can  send to any DSL-2710 router with the same firmware and the same bug ),and reach to the API <b>webproc</b> get authenticated , and get a valid session id , and use it to call the API <b>webupg</b> with appropriate headers , and param names to inject any command to run as root , and that's what i did , the file <b>exploit.sh</b> will send my crafted username password overwrite the config file through tftp ,call the file <b>exploit.py</b> get authenticated and send command to the router (since there is no netcat , filesystem is read-only , and im lazy to compile netcat for a MIPS LEXRA architecture) i sent only reboot command . </i>
+okey now we have a way to overwrite the config file with my username and password (the router will do it for me , easy just login to my router saving the backup file with username:pwned , password:pwned , now i have a configuration file that i can  send to any DSL-2750 router with the same firmware and the same bug ),and reach to the API <b>webproc</b> get authenticated , and get a valid session id , and use it to call the API <b>webupg</b> with appropriate headers , and param names to inject any command to run as root , and that's what i did , the file <b>exploit.sh</b> will send my crafted username password overwrite the config file through tftp ,call the file <b>exploit.py</b> get authenticated and send command to the router (since there is no netcat , filesystem is read-only , and im lazy to compile netcat for a MIPS LEXRA architecture) i sent only reboot command . </i>
 
 ### Pwned !
