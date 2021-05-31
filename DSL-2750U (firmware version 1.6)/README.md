@@ -41,6 +41,7 @@ LAB_004032bc:
 ```
 <br/>
 <i>Then its checking if we provided a valid session id </i><br/>
+
 ```c
     iVar2 = getenv("HTTP_COOKIE");
     if (iVar2 != 0) {
