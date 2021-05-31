@@ -121,7 +121,8 @@ netbios-ns      137/udp
 <br/>
 <i>
 tftp is very limited , and its generally used for simple tasks get , put some files via UDP , i  looked in the configuration file of tftpd , i found that anonymous user is enabled , but the only files that let me download are <b>cfg.xml</b> and <b>image.img</b> , the cfg.xml turns out its the backup file for settings in router but its encrypted , i looked on the firmware how its encrypting the config file , but looks like a lot of work , and then i said well i will try to resend the same file with the command put , i doubt it will accept it ?? but it did and the router rebooted and did set thoose settings , So lets just overwrite the old configuration with a configuration i craft with my username and password .</i>
-### Poc 
+
+### Poc
 <i>
 okey now we have a way to overwrite the config file with my username and password (the router will do it for me , easy just login to my router saving the backup file with username:pwned , password:pwned , now i have a configuration file that i can  send to any DSL-2710 router with the same firmware and the same bug ),and reach to the API <b>webproc</b> get authenticated , and get a valid session id , and use it to call the API <b>webupg</b> with appropriate headers , and param names to inject any command to run as root , and that's what i did , the file <b>exploit.sh</b> will send my crafted username password overwrite the config file through tftp ,call the file <b>exploit.py</b> get authenticated and send command to the router (since there is no netcat , filesystem is read-only , and im lazy to compile netcat for a MIPS LEXRA architecture) i sent only reboot command . </i>
 
