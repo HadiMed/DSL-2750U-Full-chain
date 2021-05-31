@@ -1,16 +1,16 @@
 # Analysis and PoC 
 
-##### Device Informations :
-  Brand : Dlink 
-  Model : DSL-2750U
-  Hardware ID : GAN9.ET235B-B
-  Version : ME_1.16
-  firmware : GAN9.ET235B-B-DL-DSL2750U-R5B028-ME.EN_2T2R
+### Device Informations :
+  Brand : Dlink <br/>
+  Model : DSL-2750U<br/>
+  Hardware ID : GAN9.ET235B-B<br/>
+  Version : ME_1.16<br/>
+  firmware : GAN9.ET235B-B-DL-DSL2750U-R5B028-ME.EN_2T2R<br/>
   
-##### firmware basic information gathering 
-i started looking into the firmware for backdoor accounts , the <b>/etc/shadow </b> file contains only 2 users root and sshuser<br/> , after bruteforcing the passwords , the root user has root as password , and sshuser : admin , but looks like web/telnet and ssh authentication is<br/>  configured somewhere else , in the file <b>/etc/config.xml </b> ,but looks like there is only one user for each service , so nothinng intresting .<br/> now for the web server , they are using a <b>mini_httpd</b> webserver and passing requests and actions <br/>through <b>/usr/www/cgi-bin/webproc</b>(Authentication , web pages ...) , now in the cgi-bin directory i found another file <b>webupg</b> its also a binary<br/> that handle certain type of requests . 
+### firmware basic information gathering 
+i started looking into the firmware for backdoor accounts , the <b>/etc/shadow </b> file contains only 2 users root and sshuser , after bruteforcing the passwords , the root user has root as password , and sshuser : admin , but looks like web/telnet and ssh authentication is  configured somewhere else , in the file <b>/etc/config.xml </b> ,but looks like there is only one user for each service , so nothinng intresting .<br/> now for the web server , they are using a <b>mini_httpd</b> webserver and passing requests and actions through <b>/usr/www/cgi-bin/webproc</b>(Authentication , web pages ...) , now in the cgi-bin directory i found another file <b>webupg</b> its also a binary that handle certain type of requests . 
 
-##### reversing webupg
+### reversing webupg
 file command says it s a stripped binary , importing file in ghidra , basic auto analysis , first its checking for some headers in the request , and the request method : (all functions and symbols were reversed) 
 ```c
   iVar2 = getenv("REQUEST_METHOD");
@@ -89,5 +89,4 @@ LAB_004034f0:
                       iVar2 = FUN_00402cdc();
                     }
 ```
-now depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function <br/>
-that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting 
+now depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting 
