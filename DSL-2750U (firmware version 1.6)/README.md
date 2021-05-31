@@ -89,4 +89,31 @@ LAB_004034f0:
                       iVar2 = FUN_00402cdc();
                     }
 ```
-now depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting 
+now depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting the old mac address (our input) by the one in the file <b>" /proc/llconfig/macadd "</b> :
+```c
+    snprintf(auStack536,"echo %s>/proc/llconfig/macaddr",puVar3);
+    system(auStack536,0);
+```
+Hmm , so it snprintf our new mac address ( unsanitized input ) into that string and passing it to LIBC system , okey i found a way to do some command injection , i shall note that the mini_httpd server runs as root , so any command we pass will run as root .
+
+```
+  583 root       1728 SW  /usr/sbin/mini_httpd -d /usr/www -c /cgi-bin/* -u roo
+```
+so the only problem here is to get a valid session id ...
+### Web Authentication 
+Authentication on the web server : the client generate a random 8 byte number and send the username and the password to the API webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...
+# misconfiguration of the tftp server (backdoor)
+nmap scans shows that tftp (trivial file transfer protocol) protocol is running on the router port 69 
+```
+ftp-data        20/tcp
+ftp             21/tcp
+telnet          23/tcp
+tftp            69/udp
+netbios-ssn     139/tcp
+netbios-ns      137/udp
+
+```
+tftp is very limited , and its generally used for simple tasks get , put some files via UDP , i  looked in the configuration file of tftpd , i found that anonymous user is enabled , but the only files that let me download are <b>cfg.xml</b> and <b>image.img</b> , the cfg.xml turns out its the backup file for settings in router but its encrypted , i looked on the firmware how its encrypting the config file , but looks like a lot of work , and then i said well i will try to resend what file with the command put , i doubt it will accept it ?? but it did and the router rebooted and probably did set thoose settings , So lets just overwrite the old configuration with a configuration i craft with my unsermae and password .
+### Poc
+okey now we have a way to overwrite the config file with my username and password and reach to the API <b>webproc</b> get authenticated , and get a valid session id , and use it to call the API <b>webupg</b> to inject any command to run as root , and that's what i did , the file <b>exploit.sh</b> will send my crafted username password overwrite the config file through tftp ,call the file <b>exploit.py</b> get authenticated and send command to the router (since there is no netcat , filesystem is read-only , and im lazy to compile netcat for a MIPS LEXRA architecture) i sent only reboot command . 
+<b>Pwned !</b>
