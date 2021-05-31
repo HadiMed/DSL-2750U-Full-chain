@@ -132,7 +132,7 @@ before exploit : <br/><br/>
 <img src="img/before.jpg"/> <br/><br/>
 After exploit :<br/><br/>
 <img src="img/after.jpg"/> <br/><br/>
-now we can access admin panel 
-<img src="img/main.jpg"/><br/><br/>
+now we can access admin panel <br/><br/>
+<img src="img/main.jpg"/>
 
 ## end.
