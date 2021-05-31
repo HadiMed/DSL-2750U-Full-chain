@@ -128,11 +128,11 @@ okey now we have a way to overwrite the config file with my username and passwor
 
 
 ### Pwned !
-before exploit : <br/>
-<img src="img/before.jpg"/> <br/>
-After exploit :<br/>
-<img src="img/after.jpg"/> <br/>
+before exploit : <br/><br/>
+<img src="img/before.jpg"/> <br/><br/>
+After exploit :<br/><br/>
+<img src="img/after.jpg"/> <br/><br/>
 now we can access admin panel 
-<img src="img/main.jpg"/><br/>
+<img src="img/main.jpg"/><br/><br/>
 
 ## end.
