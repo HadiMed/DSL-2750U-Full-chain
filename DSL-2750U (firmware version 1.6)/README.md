@@ -9,9 +9,9 @@
   
 ### firmware basic information gathering <i>
 i started looking into the firmware for backdoor accounts , the <b>/etc/shadow </b> file contains only 2 users root and sshuser , after bruteforcing the passwords , the root user has root as password , and sshuser : admin , but looks like web/telnet and ssh authentication is  configured somewhere else , in the file <b>/etc/config.xml </b> ,but looks like there is only one user for each service , so nothinng intresting .<br/> now for the web server , they are using a <b>mini_httpd</b> webserver and passing requests and actions through <b>/usr/www/cgi-bin/webproc</b>(Authentication , web pages ...) , now in the cgi-bin directory i found another file <b>webupg</b> its also a binary that handle certain type of requests . 
-</i>
+</i><br/>
 ### reversing webupg<i>
-file command says it s a stripped binary , importing file in ghidra , basic auto analysis , first its checking for some headers in the request , and the request method : (all functions and symbols were reversed) </i>
+file command says it s a stripped binary , importing file in ghidra , basic auto analysis , first its checking for some headers in the request , and the request method : (all functions and symbols were reversed) </i> <br/>
 ```c
   iVar2 = getenv("REQUEST_METHOD");
   if ((iVar2 == 0) || (iVar2 = FUN_00401880(iVar2,"POST"), iVar2 != 0)) {
@@ -39,7 +39,8 @@ LAB_004032bc:
     }
     bVar1 = false;
 ```
-<i>Then its checking if we provided a valid session id </i>
+<br/>
+<i>Then its checking if we provided a valid session id </i><br/>
 ```c
     iVar2 = getenv("HTTP_COOKIE");
     if (iVar2 != 0) {
@@ -54,7 +55,8 @@ LAB_004032bc:
             if ((iVar2 != 0) && (iVar2 = FUN_004018a8(iVar2 + 1), iVar2 == 0)) {
               bVar1 = true;
 ```
-<i>now if we have it let us run some actions , depending on what we provide in a POST variable called name  </i>
+<br/>
+<i>now if we have it let us run some actions , depending on what we provide in a POST variable called name  </i><br/>
 ```c
             iVar5 = FUN_00401160(iVar2 + 5);
             iVar2 = func_0x004011c0(iVar5,"ShowSysEvtLogFile");
@@ -90,22 +92,24 @@ LAB_004034f0:
                     }
 ```
 <i>now depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting the old mac address (our input) by the one in the file <b>" /proc/llconfig/macadd "</b> :</i>
+<br/>
 ```c
     snprintf(auStack536,"echo %s>/proc/llconfig/macaddr",puVar3);
     system(auStack536,0);
 ```
-<i>
+<br/><i>
 Hmm , so it snprintf our new mac address ( unsanitized input ) into that string and passing it to LIBC system , okey i found a way to do some command injection , i shall note that the mini_httpd server runs as root , so any command we pass will run as root .</i>
 
 ```
   583 root       1728 SW  /usr/sbin/mini_httpd -d /usr/www -c /cgi-bin/* -u roo
 ```
-<i>
-so the only problem here is to get a valid session id ...</i>
+<i><br/>
+so the only problem here is to get a valid session id ...</i><br/>
 ### Web Authentication <i>
-Authentication on the web server : the client generate a random 8 byte number and send the username and the password to the API webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...</i>
+Authentication on the web server : the client generate a random 8 byte number and send the username and the password to the API webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...</i><br/>
 ## misconfiguration of the tftp server (backdoor)<i>
 nmap scans shows that tftp (trivial file transfer protocol) protocol is running on the router port 69 </i>
+<br/>
 ```
 ftp-data        20/tcp
 ftp             21/tcp
@@ -115,6 +119,7 @@ netbios-ssn     139/tcp
 netbios-ns      137/udp
 
 ```
+<br/>
 <i>
 tftp is very limited , and its generally used for simple tasks get , put some files via UDP , i  looked in the configuration file of tftpd , i found that anonymous user is enabled , but the only files that let me download are <b>cfg.xml</b> and <b>image.img</b> , the cfg.xml turns out its the backup file for settings in router but its encrypted , i looked on the firmware how its encrypting the config file , but looks like a lot of work , and then i said well i will try to resend what file with the command put , i doubt it will accept it ?? but it did and the router rebooted and did set thoose settings , So lets just overwrite the old configuration with a configuration i craft with my usermae and password .</i>
 ### Poc <i>
