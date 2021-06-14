@@ -55,7 +55,7 @@ LAB_004032bc:
             if ((iVar2 != 0) && (iVar2 = FUN_004018a8(iVar2 + 1), iVar2 == 0)) {
               bVar1 = true;
 ```
-<i>now if we have it let us run some actions , depending on what we provide in a POST variable called name  </i>
+<i> if we have it let us run some actions , depending on what we provide in a POST variable called name  </i>
 ```c
             iVar5 = FUN_00401160(iVar2 + 5);
             iVar2 = func_0x004011c0(iVar5,"ShowSysEvtLogFile");
@@ -90,7 +90,7 @@ LAB_004034f0:
                       iVar2 = FUN_00402cdc();
                     }
 ```
-<i>now depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting the old mac address (our input) by the one in the file <b>" /proc/llconfig/macadd "</b> :</i>
+<i>so depending on what we provided in the name variable it will run the apropriate function , i started looking in every function for vulns ,now the function that gets executed when we ask for action : <b>mac</b> is interesting , the purpose of this function is to change the MAC address of the router , its doing that by overwritting the old mac address (our input) by the one in the file <b>" /proc/llconfig/macadd "</b> :</i>
 <br/>
 ```c
     snprintf(auStack536,"echo %s>/proc/llconfig/macaddr",puVar3);
