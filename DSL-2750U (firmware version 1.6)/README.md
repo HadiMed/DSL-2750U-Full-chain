@@ -1,6 +1,6 @@
 # Analysis and PoC
 ## ***Update*** :
-this bug was patched a new firmware is released check the link : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
+this bug was patched by Dlink and got acknowledged by them and a new firmware is released check the link : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
 ### Device Informations :
 <i>
   Brand : Dlink <br/>
