@@ -1,5 +1,6 @@
 # Analysis and PoC
-
+## ***Update*** :
+this bug was patched a new firmware is released check the link : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
 ### Device Informations :
 <i>
   Brand : Dlink <br/>
@@ -134,5 +135,6 @@ After exploit :<br/><br/>
 <img src="img/after.jpg"/> <br/><br/>
 now we can access admin panel <br/><br/>
 <img src="img/main.jpg"/>
-
+## Security annoucement and relevant links :
+https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
 ## end.
