@@ -1,6 +1,6 @@
 # Analysis and PoC
 ## ***Update*** :
-this bug was patched by Dlink 26/07/2021 and I got acknowledged by them 
+this bug was patched by Dlink 26/07/2021 
 <br/>a new firmware is released check the link : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
 ### Device Informations :
 <i>
@@ -107,7 +107,7 @@ Hmm , so it snprintf our new mac address ( unsanitized input ) into that string 
 <i><br/>
 so the only problem here is to get a valid session id ...</i><br/>
 ### Web Authentication <i>
-Authentication on the web server : the client generate a random 8 byte number and send the username and the password to the API webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...</i><br/>
+Authentication on the web server : the client generate a random 4 byte number and send the username and the password to the API webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...</i><br/>
 ## misconfiguration of the tftp server (backdoor)<i>
 nmap scans shows that tftp (trivial file transfer protocol) protocol is running on the router port 69 </i>
 <br/>
