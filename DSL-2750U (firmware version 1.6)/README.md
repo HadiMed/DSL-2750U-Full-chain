@@ -140,5 +140,6 @@ After exploit :<br/><br/>
 now we can access admin panel <br/><br/>
 <img src="img/main.jpg"/>
 ## Security annoucement and relevant links :
-https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
+- D-link Advisory : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
+- JAPAN / CC Disclosure : https://jvn.jp/en/vu/JVNVU92088210/
 ## end.
