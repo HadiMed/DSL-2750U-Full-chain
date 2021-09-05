@@ -110,7 +110,7 @@ Hmm , so it snprintf our new mac address ( unsanitized input ) into that string 
 <i><br/>
 so the only problem here is to get a valid session id ...</i><br/>
 ### Web Authentication <i>
-Authentication on the web server : the client generate a random 4 byte number and send the username and the password to the API webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...</i><br/>
+Authentication on the web server : the client generate a random 4 byte number and send the username and the password to the CGI webproc , now if the username and password are valid the session id is set on both the server and client and i can invoke every previous action mentioned in the previous section , but no luck to get a session id without a valid username and password , i tried the root , sshuser but no luck ...</i><br/>
 ## misconfiguration of the tftp server (backdoor)<i>
 nmap scans shows that tftp (trivial file transfer protocol) protocol is running on the router port 69 </i>
 <br/>
@@ -129,7 +129,7 @@ tftp is very limited , and its generally used for simple tasks get , put some fi
 
 ### Poc
 <i>
-okey now we have a way to overwrite the config file with my username and password (the router will do it for me , easy just login to my router saving the backup file with username:pwned , password:pwned , now i have a configuration file that i can  send to any DSL-2750 router with the same firmware and the same bug ),and reach to the API <b>webproc</b> get authenticated , and get a valid session id , and use it to call the API <b>webupg</b> with appropriate headers , and param names to inject any command to run as root , and that's what i did , the file <b>exploit.sh</b> will send my crafted config file overwritting the config file through tftp ,call the file <b>exploit.py</b> get authenticated and send command to the router (since there is no netcat , filesystem is read-only , and im lazy to compile netcat for a MIPS LEXRA architecture) i sent only reboot command . </i>
+okey now we have a way to overwrite the config file with my username and password (the router will do it for me , easy just login to my router saving the backup file with username:pwned , password:pwned , now i have a configuration file that i can  send to any DSL-2750 router with the same firmware and the same bug ),and reach to the CGI <b>webproc</b> get authenticated , and get a valid session id , and use it to call the CGI <b>webupg</b> with appropriate headers , and param names to inject any command to run as root , and that's what i did , the file <b>exploit.sh</b> will send my crafted config file overwritting the config file through tftp ,call the file <b>exploit.py</b> get authenticated and send command to the router (since there is no netcat , filesystem is read-only , and im lazy to compile netcat for a MIPS LEXRA architecture) i sent only reboot command . </i>
 
 
 ### Pwned !
