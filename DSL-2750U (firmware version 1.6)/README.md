@@ -1,13 +1,13 @@
 # Analysis and PoC
 ## ***Update*** :
-this bug was patched by Dlink 26/07/2021 
-<br/>a new firmware is released check the link : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
+This bug was patched by D-link : 26/07/2021 
+<br/>New firmware is released check the link : https://supportannouncement.us.dlink.com/announcement/publication.aspx?name=SAP10230
 ### The following CVE numbers have been assigned:
 - <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-3707"> CVE-2021-3707 </a>
 - <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-3708"> CVE-2021-3708 </a>
 ### Device Informations :
 <i>
-  Brand : Dlink <br/>
+  Brand : D-link <br/>
   Model : DSL-2750U<br/>
   Hardware ID : GAN9.ET235B-B<br/>
   Version : ME_1.16<br/>
